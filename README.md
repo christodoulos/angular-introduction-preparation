@@ -2,9 +2,9 @@
 
 - Εγκατάσταση του Angular CLI
 
-```bash
-npm install -g @angular/cli@latest
-```
+    ```bash
+    npm install -g @angular/cli@latest
+    ```
 
 - Δημιουργία ενός νέου Angular Project
 
