@@ -1,5 +1,9 @@
 # Εισαγωγή στο Angular Framework
 
+## Βήμα 2: Δημιουργία νέου component
+
+- Δημιουργία ενός νέου component με την εντολή `ng generate component <component_name>`.
+
 ## Βήμα 1: Απλή δέσμευση χαρακτηριστικών (one way binding)
 
 - Χρήση του placeholder `{{ <atribute_name > }}` για τη δεσμευση του χαρακτηριστικού `attribute_name` στο template του component.
