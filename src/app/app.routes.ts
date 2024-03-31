@@ -3,6 +3,7 @@ import { EventBindExampleComponent } from 'src/app/components/event-bind-example
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ComponentInputExampleComponent } from './components/component-input-example/component-input-example.component';
 import { ForDirectiveExampleComponent } from './components/for-directive-example/for-directive-example.component';
+import { SimpleDatatableExampleComponent } from './components/simple-datatable-example/simple-datatable-example.component';
 
 export const routes: Routes = [
   {
@@ -11,5 +12,9 @@ export const routes: Routes = [
   },
   { path: 'for-directive-example', component: ForDirectiveExampleComponent },
   { path: 'event-bind-example', component: EventBindExampleComponent },
+  {
+    path: 'simple-data-table-example',
+    component: SimpleDatatableExampleComponent,
+  },
   { path: '', component: WelcomeComponent },
 ];

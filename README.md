@@ -1,5 +1,40 @@
 # Εισαγωγή στο Angular Framework
 
+## Βήμα 8: Simple Datatable
+
+- Χρήση του https://cobbl.io/ για να παράξουμε ένα πίνακα με πολλά δεδομένα τύπου `ΕPerson` που ορίζουμε στο `/shared/interfaces/person.ts`:
+
+  ```typescript
+  export interface EPerson {
+    givenName: string;
+    surName: string;
+    age: string;
+    email: string;
+    address: string;
+    education: string;
+  }
+
+  export const ManyPerson: EPerson[] = [
+    {
+      given_name: 'Sarah',
+      surName: 'Howard',
+      age: '41',
+      email: 's.m.howard@yahoo.com',
+      education: 'Some college, no degree',
+    },
+    ...
+  ```
+
+- Δημιουργία του `SimpleDataTableComponent`
+- Δημιουργία του `SimpleDataTableExampleComponent`
+- Ενημέρωση του μενού
+
+  - app.routes
+  - list-group-menu.component.html
+
+- sorting lodash-es npm i lodash-es
+- npm i --save-dev @types/lodash-es
+
 ## Βήμα 7: Fancy App Menu με το [list-group](https://t.ly/vmYc2) του Bootstrap
 
 - Δημιουργία νέου interface `MenuItem` στο αρχείο `shared/interfaces/menu-item.ts`:
