@@ -25,8 +25,8 @@
     ...
   ```
 
-- Δημιουργία του `SimpleDataTableComponent`
-- Δημιουργία του `SimpleDataTableExampleComponent`
+- Δημιουργία του `SimpleDataTableComponent`: λαμβάνει δεδομένα τύπου `EPerson` και τα εμφανίζει σε έναν πίνακα με δυνατότητα ταξινόμησης ανά στήλη
+- Δημιουργία του `SimpleDataTableExampleComponent`: χρησιμοποιεί το `SimpleDataTableComponent`
 - Ενημέρωση του μενού της εφαρμογής μας
 
   - `app.routes.ts`:
