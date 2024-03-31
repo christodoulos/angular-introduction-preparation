@@ -18,5 +18,9 @@ export class ListGroupMenuComponent {
       text: 'Simple Data Table Example',
       routerLink: 'simple-data-table-example',
     },
+    {
+      text: 'Component Output Example',
+      routerLink: 'component-output-example',
+    },
   ];
 }

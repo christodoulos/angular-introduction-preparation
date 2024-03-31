@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { EPerson, ManyPerson } from 'src/app/shared/interfaces/person';
+import { ManyPerson } from 'src/app/shared/interfaces/person';
 import { SimpleDatatableComponent } from '../simple-datatable/simple-datatable.component';
+
 @Component({
   selector: 'app-simple-datatable-example',
   standalone: true,
@@ -9,5 +10,5 @@ import { SimpleDatatableComponent } from '../simple-datatable/simple-datatable.c
   styleUrl: './simple-datatable-example.component.css',
 })
 export class SimpleDatatableExampleComponent {
-  manyPerson = ManyPerson.slice(0, 10);
+  manyPerson = ManyPerson;
 }
