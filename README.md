@@ -27,13 +27,36 @@
 
 - Δημιουργία του `SimpleDataTableComponent`
 - Δημιουργία του `SimpleDataTableExampleComponent`
-- Ενημέρωση του μενού
+- Ενημέρωση του μενού της εφαρμογής μας
 
-  - app.routes
-  - list-group-menu.component.html
+  - `app.routes.ts`:
 
-- sorting lodash-es npm i lodash-es
-- npm i --save-dev @types/lodash-es
+    ```typescript
+    ...
+    {
+      path: 'simple-data-table-example',
+      component: SimpleDatatableExampleComponent,
+    }
+    ...
+    ```
+
+  - `list-group-menu.component.ts`:
+
+    ```typescript
+    ...
+    {
+      text: 'Simple Data Table Example',
+      routerLink: 'simple-data-table-example',
+    }
+    ...
+    ```
+
+- Εγκατάταση του `lodash-es`:
+
+  ```bash
+  npm i lodash-es
+  npm i --save-dev @types/lodash-es
+  ```
 
 ## Βήμα 7: Fancy App Menu με το [list-group](https://t.ly/vmYc2) του Bootstrap
 
