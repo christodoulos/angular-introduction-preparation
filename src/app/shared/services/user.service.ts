@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, effect, inject, signal } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { User } from 'src/app/shared/interfaces/mongo-backend';
+import {
+  Credentials,
+  LoggedInUser,
+  User,
+} from 'src/app/shared/interfaces/mongo-backend';
+import { Router } from '@angular/router';
 
 const API_URL = `${environment.apiURL}/user`;
 
@@ -10,6 +15,19 @@ const API_URL = `${environment.apiURL}/user`;
 })
 export class UserService {
   http: HttpClient = inject(HttpClient);
+  router = inject(Router);
+
+  user = signal<LoggedInUser | null>(null);
+
+  constructor() {
+    effect(() => {
+      if (this.user()) {
+        console.log('User logged in:', this.user().fullname);
+      } else {
+        console.log('No user logged in');
+      }
+    });
+  }
 
   registerUser(user: User) {
     return this.http.post<{ msg: string }>(`${API_URL}/register`, user);
@@ -19,5 +37,17 @@ export class UserService {
     return this.http.get<{ msg: string }>(
       `${API_URL}/check_duplicate_email/${email}`,
     );
+  }
+
+  loginUser(credentials: Credentials) {
+    return this.http.post<{ access_token: string }>(
+      `${API_URL}/login`,
+      credentials,
+    );
+  }
+
+  logoutUser() {
+    this.user.set(null);
+    this.router.navigate(['login']);
   }
 }
