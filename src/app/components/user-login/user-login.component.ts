@@ -6,8 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Credentials } from 'src/app/shared/interfaces/mongo-backend';
+import {
+  Credentials,
+  LoggedInUser,
+} from 'src/app/shared/interfaces/mongo-backend';
 import { UserService } from 'src/app/shared/services/user.service';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 @Component({
   selector: 'app-user-login',
@@ -20,6 +24,8 @@ export class UserLoginComponent {
   userService = inject(UserService);
   router = inject(Router);
 
+  invalidLogin = false;
+
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
@@ -29,15 +35,20 @@ export class UserLoginComponent {
     const credentials = this.form.value as Credentials;
     this.userService.loginUser(credentials).subscribe({
       next: (response) => {
-        console.log('Login successful:', response);
+        const access_token = response.access_token;
+        localStorage.setItem('access_token', access_token);
+        const decodedTokenSubject = jwtDecode(access_token)
+          .sub as unknown as LoggedInUser;
+
         this.userService.user.set({
-          fullname: 'User Name',
-          email: credentials.email,
+          fullname: decodedTokenSubject.fullname,
+          email: decodedTokenSubject.email,
         });
         this.router.navigate(['restricted-content-example']);
       },
       error: (error) => {
         console.error('Login error:', error);
+        this.invalidLogin = true;
       },
     });
   }
