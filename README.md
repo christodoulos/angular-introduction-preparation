@@ -1,5 +1,22 @@
 # Εισαγωγή στο Angular Framework
 
+## Βήμα 16: CRUD Example Scaffolding
+
+- Δημιουργία των component για το CRUD Example:
+
+  ```bash
+  ng g c components/crud/crud-dashboard
+  ng g c components/crud/crud-navbar
+  ng g c components/crud/crud-create-example
+  ng g c components/crud/crud-read-example
+  ng g c components/crud/crud-update-example
+  ng g c components/crud/crud-delete-example
+  ```
+
+- Ενημέρωση του κεντρικού μενού της εφαρμογής για το path `crud-example` προς το `CrudDashboardComponent`
+
+- Οι επιλογές του CRUD γίνονται από το μενού του `CrudNavbarComponent`
+
 ## Βήμα 15: User Authentication
 
 - Δημιουργούμε το `RestrictedContentExampleComponent` που θα λειτουργήσει σαν την πρώτη "προστατευμένη" περιοχή της εφαρμογής μας, με την έννοια ότι θα είναι προσβάσιμη μόνο από χρήστες που έχουν εγγραφεί μέσω του registration και έχουν κάνει επιτυχή έλεγχο πρόσβασης. Ενημερώνουμε το `app.routes.ts` και το μενού στο `list-group-menu.component.ts` κατά τα γνωστά και προς το παρόν όλοι οι χρήστες έχουν πρόσβαση.
