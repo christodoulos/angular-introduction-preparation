@@ -1,5 +1,118 @@
 # Εισαγωγή στο Angular Framework
 
+## Bήμα 17: CRUD Create Example
+
+- Ασχολούμαστε με το `CrudCreateExampleComponent`. Χρησιμοποιούμε το `FormArray` για να δημιουργήσουμε αντικείμενα με δυναμικό αριθμό objects σε κάποιο χαρακτηριστικό τους. Συγκεκριμένα εδώ δίνουμε τη δυνατότητα εισαγωγής δυναμικού αριθμού από τηλεφωνικούς αριθμούς (κινητό, εργασία, σπίτι).
+
+- Πρέπει να χρησιμοποιήσουμε ένα χαρακτηριστικό της κλάσης που να είναι reference στο `FormArray` για να μπορέσουμε αποτελεσματικά να έχουμε δυναμική εισαγωγή πεδίων από το template.
+
+  ```typescript
+  ...
+  phoneNumbers = this.form.get('phoneNumbers') as FormArray;
+
+  addPhoneNumber() {
+    this.phoneNumbers.push(
+      new FormGroup({
+        number: new FormControl('', Validators.required),
+        type: new FormControl('', Validators.required),
+      }),
+    );
+  }
+
+  removePhoneNumber(index: number) {
+    this.phoneNumbers.removeAt(index);
+  }
+  ...
+  ```
+
+  και στο template:
+
+  ```html
+  ...
+  <div formArrayName="phoneNumbers">
+    @for (phone of phoneNumbers.controls; let i = $index; track i) {
+    <div [formGroupName]="i" class="d-flex gap-3 align-items-center">
+      <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="text" formControlName="number" />
+        @if (phone.get("number").invalid && phone.get("number").touched) {
+        <mat-error class="text-wrap"> Ο αριθμός του τηλεφώνου είναι απαραίτητος </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="Mobile">Κινητό</mat-option>
+          <mat-option value="Work">Εργασία</mat-option>
+          <mat-option value="Home">Σπίτι</mat-option>
+        </mat-select>
+        @if (phone.get("type").invalid && phone.get("type").touched) {
+        <mat-error class="text-wrap"> Πρέπει να διαλέξετε κάποιον τύπο τηλεφώνου </mat-error>
+        }
+      </mat-form-field>
+      @if (phoneNumbers.controls.length > 1 && i !== 0) {
+      <mat-icon role="button" (click)="removePhoneNumber(i)" class="cursor-pointer">delete</mat-icon>
+      } @if (phoneNumbers.controls[i].valid) {
+      <mat-icon role="button" (click)="addPhoneNumber()" class="cursor-pointer">add</mat-icon>
+      }
+    </div>
+    }
+  </div>
+  ...
+  ```
+
+- Δημιουργία του `auth-interceptor.service.ts`:
+
+  ```bash
+  ng generate service shared/services/auth-interceptor
+  ```
+
+  Το interceptor είναι ένα Angular service που μπορεί να επεξεργαστεί τα HTTP requests ή τα HTTP responses πριν αυτά φτάσουν στον server ή μετά την απάντηση του server. Στην περίπτωσή μας το interceptor είναι υπεύθυνο για την προσθήκη του JWT token στο header των HTTP requests που απαιτούν αυθεντικοποίηση.
+
+  ```typescript
+  import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+  import { Injectable } from "@angular/core";
+
+  @Injectable()
+  export class AuthInterceptorService implements HttpInterceptor {
+    intercept(req: HttpRequest<any>, next: HttpHandler) {
+      const authToken = localStorage.getItem("access_token");
+      // console.log('authToken', authToken);
+      if (!authToken) {
+        return next.handle(req);
+      }
+
+      const authRequest = req.clone({
+        headers: req.headers.set("Authorization", "Bearer " + authToken),
+      });
+      return next.handle(authRequest);
+    }
+  }
+  ```
+
+- Ενημέρωση του `app.config.ts`:
+
+  ```typescript
+  ...
+  import {
+    HTTP_INTERCEPTORS,
+    provideHttpClient,
+    withInterceptorsFromDi,
+  } from '@angular/common/http';
+  import { AuthInterceptorService } from './shared/services/auth-interceptor.service';
+
+  export const appConfig: ApplicationConfig = {
+    providers: [
+      ...,
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptorService,
+        multi: true,
+      },
+    ],
+  };
+  ```
+
 ## Βήμα 16: CRUD Example Scaffolding
 
 - Δημιουργία των component για το CRUD Example:

@@ -71,8 +71,14 @@ export class CrudCreateExampleComponent {
     console.log(this.form.value);
     const customer = this.form.value as Customer;
 
-    this.customerService.createCustomer(customer).subscribe((response) => {
-      console.log(response);
+    this.customerService.createCustomer(customer).subscribe({
+      next: (response) => {
+        this.form.reset();
+        alert('Customer created');
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+      },
     });
   }
 }
